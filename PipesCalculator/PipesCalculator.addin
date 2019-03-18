@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+  <AddIn Type="Command">
+    <Text>Command PipesCalculator</Text>
+    <Description>Some description for PipesCalculator</Description>
+    <Assembly>PipesCalculator.dll</Assembly>
+    <FullClassName>PipesCalculator.Command</FullClassName>
+    <ClientId>62faa62c-5801-4dd6-86ff-93f752a169dc</ClientId>
+    <VendorId>com.typepad.thebuildingcoder</VendorId>
+    <VendorDescription>The Building Coder, http://thebuildingcoder.typepad.com</VendorDescription>
+  </AddIn>
+  <AddIn Type="Application">
+    <Name>Application PipesCalculator</Name>
+    <Assembly>PipesCalculator.dll</Assembly>
+    <FullClassName>PipesCalculator.App</FullClassName>
+    <ClientId>fe9e0ec4-81c9-4282-aa90-121d71f95c3b</ClientId>
+    <VendorId>com.typepad.thebuildingcoder</VendorId>
+    <VendorDescription>The Building Coder, http://thebuildingcoder.typepad.com</VendorDescription>
+  </AddIn>
+</RevitAddIns>
