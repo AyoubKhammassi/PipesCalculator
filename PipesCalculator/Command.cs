@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using Autodesk.Revit.ApplicationServices;
 using Autodesk.Revit.Attributes;
 using Autodesk.Revit.DB;
@@ -57,6 +58,8 @@ namespace PipesCalculator
                     try
                     {
                         transaction.Start("Calculation");
+                        Utilities.doc = doc;
+
                         /*if (!Utilities.dataIsExtracted)
                             Utilities.LoadAllData(doc);
                         //Opening the excel App
@@ -70,14 +73,21 @@ namespace PipesCalculator
                         //tree.ends = new List<Element>();
                         //tree.allResults = new List<CalculationResults>();
                         //tree.Traverse();
-
+                        var stndType = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_PipeCurves).OfClass(typeof(PipeType)).FirstOrDefault(x => { return (string.Compare(x.Name, "Standard", true) == 0); });
+                        
+                        /*PipeType standardType = stndType as PipeType;
+                        var allPipeTypes1 = new FilteredElementCollector(doc).OfClass(typeof(PipeType)).Where(x => string.Compare(((PipeType)x).FamilyName, standardType.FamilyName, true) == 0);
+                        */
 
                         FilteredElementCollector collector = new FilteredElementCollector(doc);
+
                         collector.OfCategory(BuiltInCategory.OST_PipingSystem).WhereElementIsNotElementType();
                         List<Element> systems = collector.ToElements() as List<Element>;
                         MEPSystem s = (MEPSystem)systems[0];
                         Displayer form = new Displayer(uidoc, systems);
                         form.ShowDialog();
+
+                        
                   
 
 

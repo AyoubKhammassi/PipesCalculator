@@ -78,6 +78,8 @@ namespace PipesCalculator
         //array that contains minimum diameters or each integer coeffecient
         public static double[] minimumDiameters;
         public static Dictionary<string, List<Values>> materials;
+        //List of all created pipe types
+        public static List<PipeType> pipeTypes;
         //List of created segments
         public static Dictionary<string, PipeSegment> segments;
         //whether the data is extracted from the excel file or not
@@ -87,6 +89,15 @@ namespace PipesCalculator
         public static PipeScheduleType calculationsSchedule;
         //speed used in calculations
         public static double speed = 1.5;
+
+
+        //Utilities properties 
+        //document that the plugin will work on
+        public static Document doc;
+        //using this pipe type to duplicate it and create new pipe types
+        public static FamilySymbol standardPipeType;
+        //MEPSystem that the plugin is currntly working on
+        public static MEPSystem calculatedSystem;
         #endregion
 
 
@@ -255,21 +266,35 @@ namespace PipesCalculator
             }
             return materials;
         }
-        public static void LoadAllData(Document doc)
+        public static void LoadAllData()
         {
             OpenExcelApp(@"D:\Work\BIMINTOUCH\Water Supply\DATA.xlsx");
             //load data from excel file if it's not already loaded
+            //loading fixtures flow
             if (fixturesFlow == null)
                 LoadFromExcel(1);
+            //loading materials
             if (materials == null)
                 materials = LoadMaterialsFromExcel();
+            if (pipeTypes == null)
+                LoadBimitPipeTypes();
             //initializing vars
-            calculationsSchedule = PipeScheduleType.Create(doc, "CALCULATION");
+            calculationsSchedule = PipeScheduleType.Create(doc, string.Concat(calculatedSystem.Name, DateTime.Now.ToString("yyyyMMddHHmmss")));
             List<string> matNames = new List<string>(materials.Keys);
             segments = new Dictionary<string, PipeSegment>();
             foreach(string matName in matNames)
             {
-                ElementId matId = Material.Create(doc, matName.Remove(0, 5));
+                ElementId matId;
+
+                var existingMat = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Materials).FirstOrDefault(x => string.Compare(x.Name, matName.Remove(0, 5), true) == 0).Id;
+                if (existingMat == null)
+                    matId = Material.Create(doc, matName.Remove(0, 5));
+                else
+                    matId = existingMat;
+                /*else
+                    matId = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Materials).FirstOrDefault(x => x.Name == matName).Id;*/
+                /*FamilySymbol newPipeType = CreateNewPipeType(standardPipeType, matName, matId);
+                pipeTypes.Add(newPipeType);*/
                 Values defaultSize = materials[matName][0];
                 double nd = (defaultSize.intd + defaultSize.extd) / 2;
                 MEPSize size = new MEPSize(nd / 304.8, defaultSize.intd / 304.8, defaultSize.extd / 304.8, true, true);
@@ -288,7 +313,7 @@ namespace PipesCalculator
         #region Revit Methods
         //Revit Methods
         //returns all the elements of a specific category in an active view
-        public static List<Element> GetElementsInView(Document doc, ElementId viewId, BuiltInCategory category)
+        public static List<Element> GetElementsInView(ElementId viewId, BuiltInCategory category)
         {
             ElementCategoryFilter categoryFilter = new ElementCategoryFilter(category);
             FilteredElementCollector coll = new FilteredElementCollector(doc, viewId).WherePasses(categoryFilter);
@@ -356,6 +381,12 @@ namespace PipesCalculator
             }
         }
 
+        public static void ChangePipeType(CalculationResults cr)
+        {
+            PipeType newPipeType = pipeTypes.FirstOrDefault(x => x.Name.Contains(cr.material.Remove(0,5)));
+            cr.pipe.ChangeTypeId(newPipeType.Id);
+        }
+
         //Set the sizes of a pipe
         public static void SetPipeSize(Pipe pipe, double nominalDiameter, double innerDiameter, double outerDiameter, string materialName)
         {
@@ -377,7 +408,7 @@ namespace PipesCalculator
             parameter.Set(value);
         }
         //returns a list of elements that have the same value for a specific parameter
-        public static List<Element> GetElementsWithTheSameParameterValue(Document doc, BuiltInParameter parameter, string value)
+        public static List<Element> GetElementsWithTheSameParameterValue(BuiltInParameter parameter, string value)
         {
             List<Element> elements = new List<Element>();
             ParameterValueProvider provider = new ParameterValueProvider(new ElementId((int)parameter));
@@ -391,11 +422,11 @@ namespace PipesCalculator
         }
 
         //Create, assign variable to and traverse the tree correspondent to a specific MEPSystem
-        public static List<CalculationResults> CalculateForAllPipes(MEPSystem targetSystem, Document doc)
+        public static List<CalculationResults> CalculateForAllPipes(MEPSystem targetSystem)
         {
             //loading necessary data first
             if (!dataIsExtracted)
-                LoadAllData(doc);
+                LoadAllData();
             TraversalTree tree = new TraversalTree(doc, targetSystem);
             tree.doc = doc;
             tree.allResults = new List<CalculationResults>();
@@ -403,6 +434,35 @@ namespace PipesCalculator
             return tree.allResults;
 
         }
+
+        public static FamilySymbol CreateNewPipeType(FamilySymbol oldType, string newTypeName, ElementId matId)
+        {
+            ElementType newElementType = oldType.Duplicate(newTypeName);
+            FamilySymbol sym = newElementType as FamilySymbol;
+
+
+            /*Element material_glass = Util.FindElementByName(
+              sym.Document, typeof(Material), "Glass");*/
+
+
+            sym.get_Parameter(BuiltInParameter.MATERIAL_ID_PARAM).Set(matId);
+
+            return sym;
+        }
+
+        //load all pipe types types related to BIMIT from document 
+        public static void LoadBimitPipeTypes()
+        {
+            pipeTypes = new List<PipeType>();
+            var lookup = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_PipeCurves)
+                .OfClass(typeof(PipeType)).ToList<Element>();
+            foreach(Element e in lookup)
+            {
+                if (e.Name.Contains("BIMIT"))
+                    pipeTypes.Add((PipeType)e);
+            }
+        }
+
         #endregion
 
         #region calculations methods
@@ -519,6 +579,7 @@ namespace PipesCalculator
             failValue.intd = -1;
             return failValue;
         }
+
         #endregion
 
         #region winForms methods

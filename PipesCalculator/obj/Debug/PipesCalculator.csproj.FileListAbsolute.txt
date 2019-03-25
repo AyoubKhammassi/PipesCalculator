@@ -7,3 +7,13 @@ D:\projects\VISUAL STUDIO\PipesCalculator\PipesCalculator\obj\Debug\PipesCalcula
 D:\projects\VISUAL STUDIO\PipesCalculator\PipesCalculator\obj\Debug\PipesCalculator.dll
 D:\projects\VISUAL STUDIO\PipesCalculator\PipesCalculator\obj\Debug\PipesCalculator.pdb
 D:\projects\VISUAL STUDIO\PipesCalculator\PipesCalculator\obj\Debug\PipesCalculator.Displayer.resources
+D:\projects\VISUAL STUDIO\PipesCalculator - Secondary\PipesCalculator\bin\Debug\PipesCalculator.dll
+D:\projects\VISUAL STUDIO\PipesCalculator - Secondary\PipesCalculator\bin\Debug\PipesCalculator.pdb
+D:\projects\VISUAL STUDIO\PipesCalculator - Secondary\PipesCalculator\obj\Debug\PipesCalculator.csproj.ResolveComReference.cache
+D:\projects\VISUAL STUDIO\PipesCalculator - Secondary\PipesCalculator\obj\Debug\PipesCalculator.Displayer.resources
+D:\projects\VISUAL STUDIO\PipesCalculator - Secondary\PipesCalculator\obj\Debug\PipesCalculator.Main.resources
+D:\projects\VISUAL STUDIO\PipesCalculator - Secondary\PipesCalculator\obj\Debug\PipesCalculator.csproj.GenerateResource.Cache
+D:\projects\VISUAL STUDIO\PipesCalculator - Secondary\PipesCalculator\obj\Debug\PipesCalculator.csproj.CoreCompileInputs.cache
+D:\projects\VISUAL STUDIO\PipesCalculator - Secondary\PipesCalculator\obj\Debug\PipesCalculator.dll
+D:\projects\VISUAL STUDIO\PipesCalculator - Secondary\PipesCalculator\obj\Debug\PipesCalculator.pdb
+D:\projects\VISUAL STUDIO\PipesCalculator - Secondary\PipesCalculator\obj\Debug\PipesCalculator.csprojResolveAssemblyReference.cache

@@ -7,6 +7,7 @@ using Autodesk.Revit.UI;
 using Winforms = System.Windows.Forms;
 using System.Linq;
 using System.ComponentModel;
+using System.Runtime.InteropServices;
 #endregion
 
 namespace PipesCalculator
@@ -15,7 +16,7 @@ namespace PipesCalculator
     {
         //a list of all the systems as a list of elements
         public List<Element> allSystems;
-        //List of all thje results
+        //List of all the results
         public List<CalculationResults> allResults;
         public UIDocument uidoc;
 
@@ -41,14 +42,15 @@ namespace PipesCalculator
 
         private void ChoiceButton_Click(object sender, EventArgs e)
         {
-            Element choice = allSystems.Where(f => f.Name == systems.SelectedItem.ToString()).ToArray()[0];
-            MEPSystem chosenSystem = (MEPSystem)choice;
-            allResults = Utilities.CalculateForAllPipes(chosenSystem, chosenSystem.Document);
-            Hide();
-            DisplayNamesAndIDs();
-            buttonsPanel.Show();
-            header.Hide();
-            Show();
+                Element choice = allSystems.Where(f => f.Name == systems.SelectedItem.ToString()).ToArray()[0];
+                MEPSystem chosenSystem = (MEPSystem)choice;
+                Utilities.calculatedSystem = chosenSystem;
+                allResults = Utilities.CalculateForAllPipes(chosenSystem);
+                Hide();
+                DisplayNamesAndIDs();
+                buttonsPanel.Show();
+                header.Hide();
+                Show();
         }
 
         public void DisplayNamesAndIDs()
@@ -110,6 +112,7 @@ namespace PipesCalculator
             foreach(CalculationResults cr in allResults)
             {
                 double nominalDiameter = (cr.commercialExternalDiameter + cr.commercialInternalDiameter) / 2;
+                Utilities.ChangePipeType(cr);
                 Utilities.SetPipeSize(cr.pipe, nominalDiameter, cr.commercialInternalDiameter, cr.commercialExternalDiameter, cr.material);
             }
             apply.Enabled = false;
