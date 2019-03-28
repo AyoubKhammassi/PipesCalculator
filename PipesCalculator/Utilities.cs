@@ -65,6 +65,8 @@ namespace PipesCalculator
     {
 
         #region Fields
+        //resources path
+        const string resourcesPath = @"C:\Users\Ayoub\Documents\Projects\Visual Studio Projects\pipescalculator\PipesCalculator\Resources\DATA.xlsx";
         //Attributes
         //Excel Attributes
         public static ExcelLibrary.Application excelApp = new ExcelLibrary.Application();
@@ -94,8 +96,6 @@ namespace PipesCalculator
         //Utilities properties 
         //document that the plugin will work on
         public static Document doc;
-        //using this pipe type to duplicate it and create new pipe types
-        public static FamilySymbol standardPipeType;
         //MEPSystem that the plugin is currntly working on
         public static MEPSystem calculatedSystem;
         #endregion
@@ -268,7 +268,7 @@ namespace PipesCalculator
         }
         public static void LoadAllData()
         {
-            OpenExcelApp(@"D:\Work\BIMINTOUCH\Water Supply\DATA.xlsx");
+            OpenExcelApp(resourcesPath);
             //load data from excel file if it's not already loaded
             //loading fixtures flow
             if (fixturesFlow == null)
@@ -282,15 +282,16 @@ namespace PipesCalculator
             calculationsSchedule = PipeScheduleType.Create(doc, string.Concat(calculatedSystem.Name, DateTime.Now.ToString("yyyyMMddHHmmss")));
             List<string> matNames = new List<string>(materials.Keys);
             segments = new Dictionary<string, PipeSegment>();
-            foreach(string matName in matNames)
+            //creating this here so it doesn't get created multiple times
+            FilteredElementCollector materialElementCollector = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Materials);
+            foreach (string matName in matNames)
             {
                 ElementId matId;
-
-                var existingMat = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Materials).FirstOrDefault(x => string.Compare(x.Name, matName.Remove(0, 5), true) == 0).Id;
-                if (existingMat == null)
+                var existingMat = materialElementCollector.FirstOrDefault(x => string.Compare(x.Name, matName.Remove(0, 5), true) == 0);
+                if (null == existingMat)
                     matId = Material.Create(doc, matName.Remove(0, 5));
                 else
-                    matId = existingMat;
+                    matId = existingMat.Id;
                 /*else
                     matId = new FilteredElementCollector(doc).OfCategory(BuiltInCategory.OST_Materials).FirstOrDefault(x => x.Name == matName).Id;*/
                 /*FamilySymbol newPipeType = CreateNewPipeType(standardPipeType, matName, matId);

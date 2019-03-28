@@ -17,3 +17,13 @@ D:\projects\VISUAL STUDIO\PipesCalculator - Secondary\PipesCalculator\obj\Debug\
 D:\projects\VISUAL STUDIO\PipesCalculator - Secondary\PipesCalculator\obj\Debug\PipesCalculator.dll
 D:\projects\VISUAL STUDIO\PipesCalculator - Secondary\PipesCalculator\obj\Debug\PipesCalculator.pdb
 D:\projects\VISUAL STUDIO\PipesCalculator - Secondary\PipesCalculator\obj\Debug\PipesCalculator.csprojResolveAssemblyReference.cache
+C:\Users\Ayoub\Documents\Projects\Visual Studio Projects\pipescalculator\PipesCalculator\bin\Debug\PipesCalculator.dll
+C:\Users\Ayoub\Documents\Projects\Visual Studio Projects\pipescalculator\PipesCalculator\bin\Debug\PipesCalculator.pdb
+C:\Users\Ayoub\Documents\Projects\Visual Studio Projects\pipescalculator\PipesCalculator\obj\Debug\PipesCalculator.csprojAssemblyReference.cache
+C:\Users\Ayoub\Documents\Projects\Visual Studio Projects\pipescalculator\PipesCalculator\obj\Debug\PipesCalculator.csproj.ResolveComReference.cache
+C:\Users\Ayoub\Documents\Projects\Visual Studio Projects\pipescalculator\PipesCalculator\obj\Debug\PipesCalculator.Displayer.resources
+C:\Users\Ayoub\Documents\Projects\Visual Studio Projects\pipescalculator\PipesCalculator\obj\Debug\PipesCalculator.Main.resources
+C:\Users\Ayoub\Documents\Projects\Visual Studio Projects\pipescalculator\PipesCalculator\obj\Debug\PipesCalculator.csproj.GenerateResource.cache
+C:\Users\Ayoub\Documents\Projects\Visual Studio Projects\pipescalculator\PipesCalculator\obj\Debug\PipesCalculator.csproj.CoreCompileInputs.cache
+C:\Users\Ayoub\Documents\Projects\Visual Studio Projects\pipescalculator\PipesCalculator\obj\Debug\PipesCalculator.dll
+C:\Users\Ayoub\Documents\Projects\Visual Studio Projects\pipescalculator\PipesCalculator\obj\Debug\PipesCalculator.pdb
