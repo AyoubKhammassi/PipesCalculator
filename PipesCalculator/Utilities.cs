@@ -66,7 +66,7 @@ namespace PipesCalculator
 
         #region Fields
         //resources path
-        const string resourcesPath = @"C:\Users\Ayoub\Documents\Projects\Visual Studio Projects\pipescalculator\PipesCalculator\Resources\DATA.xlsx";
+        const string resourcesPath = @"C:\Users\Ayoub\Documents\Projects\other\PipesCalculator\PipesCalculator\bin\Debug\Resources\DATA.xlsx";
         //Attributes
         //Excel Attributes
         public static ExcelLibrary.Application excelApp = new ExcelLibrary.Application();
