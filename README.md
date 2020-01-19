@@ -6,13 +6,13 @@ The addin now supports 3 pipes materials (*Acier*,*Cuivre*,*PER*), and a limited
 ## How to add an Equipment
 The addin uses an Excel sheet named **DATA.xlsx** as a databse, you can find it in the resources folder. To add an equipment add a new entry to the to the *Equipment* sheet, in the first column add the name of the equipment, in the columns B and C add respectively the flow and the coeffecient.
 
-![alt text](Readme%20Images\data_fixtures.PNG "Dafualt Equipments") 
+![](Readme%20Images/data_fixtures.PNG "Dafualt Equipments") 
 
 
 ## How to add a Material
 To add a new material to the addin, create a new sheet in the DATA.xlsx file, the name of the new sheet must follow this pattern **Tube + MaterialName**. Add as much entries as you want, in each entry, use the column A and B for respectively the internal and external diameters. The column C is for the section. The More entries you add for a material the more accurate the results will be.
 
-![alt text](Readme%20Images\data_material_example.PNG "Tube Acier Example").
+![](Readme%20Images/data_material_example.PNG "Tube Acier Example").
 
 
 ## How to install
@@ -32,14 +32,14 @@ The addin doesn't have an installer currently, you'll have to install it manuall
 1. In Revit, Navigate to Addins > External tools and choose Pipes PipesCalculator.
 ***
 2. Choose the System that you want to work on.
-![alt text](Readme%20Images\UI1.PNG "Tube Acier Example").
+![](Readme%20Images/UI1.PNG "Tube Acier Example").
 ***
 3. The addin will display all the pipes under the chosen system, you can double click the ID of any of the pipes to focus on it in Revit.
 Under the Tube column, you can choose the material that you want to apply to the pipe.
-![alt text](Readme%20Images\UI2.PNG "Tube Acier Example").
+![](Readme%20Images/UI2.PNG "Tube Acier Example").
 ***
 4. When you're done applying materials, click Calculate (*Caclculer*) and the addin will calculate all the needed values.
-![alt text](Readme%20Images\UI3.PNG "Tube Acier Example").
+![](Readme%20Images/UI3.PNG "Tube Acier Example").
 
 5. You can finally apply the materials and the new values to the pipes by pressing Apply (*Appliquer*). If you just need the caclulated values, copy them and close the window, revit will rollback and won't apply the modifications.
 
